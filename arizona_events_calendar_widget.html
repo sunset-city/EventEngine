@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHX Events Calendar</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="cal-wrap">
+
+    <div class="cal-header">
+      <span class="month-label" id="monthLabel"></span>
+      <div class="cal-nav">
+        <button onclick="changeMonth(-1)">&#8249;</button>
+        <button onclick="changeMonth(1)">&#8250;</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" onclick="toggleFilter(this, 'all')">All</button>
+      <button class="filter-btn" onclick="toggleFilter(this, 'suns')">Suns / Sports</button>
+      <button class="filter-btn" onclick="toggleFilter(this, 'zine')">Zines</button>
+      <button class="filter-btn" onclick="toggleFilter(this, 'card')">Trading cards</button>
+      <button class="filter-btn" onclick="toggleFilter(this, 'local')">Local AZ</button>
+    </div>
+
+    <div class="day-grid" id="calGrid"></div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#FEF0E6; border:1px solid #993C1D;"></div>
+        Suns / sports
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#E1F5EE; border:1px solid #0F6E56;"></div>
+        Local AZ
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#EEEDFE; border:1px solid #3C3489;"></div>
+        Zine drop
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#FBEAF0; border:1px solid #72243E;"></div>
+        Trading card
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <p class="sidebar-title">Upcoming events</p>
+      <div id="eventList"></div>
+    </div>
+
+    <div class="scraper-note">
+      <span style="font-size:20px;">📷</span>
+      <p>Instagram tracker slot ready — events tagged <code>@account</code> will populate automatically once the scraper is wired in.</p>
+    </div>
+
+  </div>
+
+  <script src="calendar.js"></script>
+</body>
+</html>

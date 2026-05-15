@@ -1,0 +1,89 @@
+<!-- Paste into WordPress HTML block. Set API URL in the script tag. -->
+<div class="event-submit-wrap" id="eventSubmitWrap">
+  <h3 class="event-submit-title">Submit your event to the zine calendar</h3>
+  <p class="event-submit-desc">Tell us about your event. We review every submission before it goes live.</p>
+
+  <form id="eventSubmitForm" class="event-submit-form">
+    <label>Event name <input type="text" name="summary" required /></label>
+    <label>Date &amp; time <input type="datetime-local" name="start_time" required /></label>
+    <label>Location <input type="text" name="location" required /></label>
+    <label>Description <textarea name="description" rows="4" required></textarea></label>
+    <label>Event type
+      <select name="event_type">
+        <option value="local">Local AZ</option>
+        <option value="zine">Zine</option>
+        <option value="suns">Suns / Sports</option>
+        <option value="card">Trading cards</option>
+      </select>
+    </label>
+    <label>Instagram / link (optional) <input type="url" name="source_url" /></label>
+    <label>Your name <input type="text" name="submitter_name" /></label>
+    <label>Email <input type="email" name="submitter_email" /></label>
+    <label>Marketing budget (optional)
+      <input type="text" name="marketing_budget" placeholder="e.g. $200–500 for flyers + IG ads" />
+    </label>
+    <label>How do you feel about your digital media right now?
+      <textarea name="digital_media_notes" rows="3" placeholder="What's working, what isn't, where you want to be…"></textarea>
+    </label>
+    <button type="submit">Submit for review</button>
+  </form>
+
+  <p id="eventSubmitMsg" class="event-submit-msg" hidden></p>
+  <p class="event-submit-cta">
+    Need strategy or production help?
+    <a id="workWithUsLink" href="#" target="_blank" rel="noopener">Work with Sunset-City →</a>
+  </p>
+</div>
+
+<script>
+(function () {
+  const API_BASE = 'https://YOUR-API-HOST'; // e.g. https://api.sunset-city.com
+  const form = document.getElementById('eventSubmitForm');
+  const msg = document.getElementById('eventSubmitMsg');
+  const wwLink = document.getElementById('workWithUsLink');
+
+  fetch(API_BASE + '/api/config')
+    .then((r) => r.json())
+    .then((cfg) => { if (cfg.work_with_us_url) wwLink.href = cfg.work_with_us_url; })
+    .catch(() => {});
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const start = new Date(fd.get('start_time'));
+    const body = {
+      summary: fd.get('summary'),
+      start_time: start.toISOString(),
+      location: fd.get('location'),
+      description: fd.get('description'),
+      event_type: fd.get('event_type') || 'local',
+      source_url: fd.get('source_url') || null,
+      submitter_name: fd.get('submitter_name') || null,
+      submitter_email: fd.get('submitter_email') || null,
+      marketing_budget: fd.get('marketing_budget') || null,
+      digital_media_notes: fd.get('digital_media_notes') || null,
+    };
+
+    msg.hidden = false;
+    msg.className = 'event-submit-msg';
+    msg.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(API_BASE + '/api/events/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Submit failed');
+      msg.textContent = data.message;
+      msg.classList.add('success');
+      if (data.work_with_us_url) wwLink.href = data.work_with_us_url;
+      form.reset();
+    } catch (err) {
+      msg.textContent = err.message;
+      msg.classList.add('error');
+    }
+  });
+})();
+</script>
