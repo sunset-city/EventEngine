@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Admin — Pending Review</title>
+  <link rel="stylesheet" href="/admin-static/admin_dashboard.css" />
+</head>
+<body>
+  <div class="admin-wrap">
+    <header class="admin-header">
+      <h1>Pending events</h1>
+      <p class="admin-sub">Approve or reject Instagram scrapes and user submissions.</p>
+      <div class="admin-toolbar">
+        <button type="button" id="refreshBtn">Refresh</button>
+        <span id="statusMsg" class="status-msg" aria-live="polite"></span>
+      </div>
+    </header>
+
+    <div id="loading" class="loading">Loading…</div>
+
+    <table class="pending-table" id="pendingTable" hidden>
+      <thead>
+        <tr>
+          <th>When</th>
+          <th>Event</th>
+          <th>Source</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="pendingBody"></tbody>
+    </table>
+
+    <p id="emptyState" class="empty-state" hidden>No pending events.</p>
+  </div>
+
+  <script>
+    window.EVENT_API_BASE = window.EVENT_API_BASE || "";
+  </script>
+  <script src="/admin-static/admin_dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+body {
+  margin: 0;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  background: #fafafa;
+  color: #222;
+}
+
+.admin-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+}
+
+.admin-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.admin-sub {
+  margin: 0 0 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-toolbar button {
+  border: 0.5px solid #ccc;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.admin-toolbar button:hover {
+  background: #f5f5f5;
+}
+
+.status-msg {
+  font-size: 0.85rem;
+  color: #0f6e56;
+}
+
+.status-msg.error {
+  color: #993c1d;
+}
+
+.loading,
+.empty-state {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.pending-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 0.5px solid #e5e5e5;
+}
+
+.pending-table th,
+.pending-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 0.5px solid #eee;
+  vertical-align: top;
+  font-size: 0.875rem;
+}
+
+.pending-table th {
+  background: #f5f5f5;
+  font-weight: 500;
+  color: #666;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pending-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pending-table tr.busy {
+  opacity: 0.5;
+}
+
+.detail .meta,
+.detail .desc {
+  display: block;
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #f0f0f0;
+  color: #555;
+}
+
+.badge.instagram_scrap {
+  background: #eeedfe;
+  color: #3c3489;
+}
+
+.badge.user_submitted {
+  background: #e1f5ee;
+  color: #0f6e56;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.btn-approve,
+.btn-reject {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.btn-approve {
+  background: #e1f5ee;
+  color: #0f6e56;
+}
+
+.btn-reject {
+  background: #fbeaf0;
+  color: #72243e;
+}
+
+.btn-approve:hover {
+  filter: brightness(0.96);
+}
+
+.btn-reject:hover {
+  filter: brightness(0.96);
+}
