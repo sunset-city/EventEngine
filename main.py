@@ -106,3 +106,9 @@ if __name__ == "__main__":
         port=int(os.getenv("PORT", "8000")),
         reload=os.getenv("RELOAD", "true").lower() == "true",
     )
+@app.get("/calendar")
+def calendar_page():
+    path = os.path.join(_static_dir, "arizona_events_calendar_widget.html")
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail="Calendar not found")
+    return FileResponse(path)
