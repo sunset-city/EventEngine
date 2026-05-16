@@ -1,17 +1,25 @@
-const EVENTS = [
-  { date: '2026-05-15', title: 'PHX Zine vol. 3 drop',        type: 'zine',  venue: "Bragg's Pie Factory",    ig: '@phxzine' },
-  { date: '2026-05-17', title: 'Suns playoff watch party',    type: 'suns',  venue: 'Footprint Center',        ig: '@suns' },
-  { date: '2026-05-20', title: 'AZ Trading Card Show',        type: 'card',  venue: 'Mesa Convention Ctr',     ig: '@aztradingcards' },
-  { date: '2026-05-22', title: 'First Friday Phoenix',        type: 'local', venue: 'Roosevelt Row',           ig: '@firstfridayphx' },
-  { date: '2026-05-24', title: 'Interview release: Local artist', type: 'zine', venue: 'Online',              ig: '@phxzine' },
-  { date: '2026-05-28', title: 'Suns game night',             type: 'suns',  venue: 'Footprint Center',        ig: '@suns' },
-  { date: '2026-06-01', title: 'Zine swap meet',              type: 'zine',  venue: 'Changing Hands Bookstore',ig: '@phxzine' },
-  { date: '2026-06-05', title: 'PHX Card collectors meet',    type: 'card',  venue: 'Scottsdale Quarter',      ig: '@aztradingcards' },
-  { date: '2026-06-07', title: 'First Saturday art walk',     type: 'local', venue: 'Grand Ave',               ig: '@grandavephx' },
-  { date: '2026-06-12', title: 'Limited trading card drop',   type: 'card',  venue: 'Online / DM',             ig: '@phxzine' },
-  { date: '2026-06-15', title: 'Summer zine workshop',        type: 'zine',  venue: 'Civic Space Park',        ig: '@phxzine' },
-  { date: '2026-06-20', title: 'AZ Sports collectibles fair', type: 'suns',  venue: 'PHX Convention Ctr',      ig: '@azsports' },
-];
+const API_BASE = 'http://localhost:8000';
+let EVENTS = [];
+
+async function loadEvents() {
+  try {
+    const res = await fetch(`${API_BASE}/api/events`);
+    const data = await res.json();
+    EVENTS = data.map(e => ({
+      date: e.start_time.split('T')[0],
+      title: e.summary,
+      type: e.event_type || 'local',
+      venue: e.location,
+      ig: e.ig_handle ? `@${e.ig_handle}` : '',
+    }));
+  } catch (err) {
+    console.error('Failed to load events:', err);
+    EVENTS = [];
+  }
+  render();
+}
+
+loadEvents();
 
 let currentDate = new Date(2026, 4, 1);
 let activeFilter = 'all';
@@ -132,5 +140,3 @@ function renderList() {
     list.appendChild(item);
   });
 }
-
-render();
